@@ -1,0 +1,25 @@
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required: []
+    properties:
+      db_path:
+        type: string
+        description: "Path to the SQLite database file (default: ~/.mcp-memory-graph/memories.db)"
+      model:
+        type: string
+        description: "Sentence-transformers embedding model (default: all-MiniLM-L6-v2)"
+      conflict_threshold:
+        type: number
+        description: "Cosine similarity threshold for conflict detection (default: 0.85)"
+  commandFunction: |-
+    (config) => ({
+      command: 'python',
+      args: ['server.py'],
+      env: {
+        ...(config.db_path ? { MEMORY_GRAPH_DB_PATH: config.db_path } : {}),
+        ...(config.model ? { MEMORY_GRAPH_MODEL: config.model } : {}),
+        ...(config.conflict_threshold ? { MEMORY_GRAPH_CONFLICT_THRESHOLD: String(config.conflict_threshold) } : {})
+      }
+    })
