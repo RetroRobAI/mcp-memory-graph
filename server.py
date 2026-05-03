@@ -16,10 +16,13 @@ from config import (
 
 mcp = FastMCP("mcp-memory-graph")
 db.init_db()
-_model = SentenceTransformer(EMBEDDING_MODEL)
 
+_model = None
 
 def _embed(text: str) -> list[float]:
+    global _model
+    if _model is None:
+        _model = SentenceTransformer(EMBEDDING_MODEL)
     return _model.encode(text, normalize_embeddings=True).tolist()
 
 
