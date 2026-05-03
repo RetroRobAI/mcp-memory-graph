@@ -1,0 +1,114 @@
+{
+  "serverInfo": {
+    "name": "mcp-memory-graph",
+    "version": "1.0.0"
+  },
+  "authentication": {
+    "required": false
+  },
+  "tools": [
+    {
+      "name": "store_memory",
+      "description": "Store a new memory with priority, type, and optional tags. Embeds the content, checks for conflicts, and optionally auto-resolves them by authority score.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string" },
+          "priority": { "type": "string", "enum": ["high", "medium", "low"], "default": "medium" },
+          "memory_type": { "type": "string", "enum": ["user", "feedback", "project", "reference", "general"], "default": "general" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "auto_resolve_conflicts": { "type": "boolean", "default": true }
+        },
+        "required": ["content"]
+      }
+    },
+    {
+      "name": "retrieve_memories",
+      "description": "Retrieve memories ranked by weighted score (semantic similarity x authority). High-priority explicit instructions rank above lower-priority inferred memories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string" },
+          "limit": { "type": "integer", "default": 10 },
+          "min_authority": { "type": "number", "default": 0.0 }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "list_memories",
+      "description": "List memories with optional filters by status, type, and priority.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string", "enum": ["active", "superseded", "deleted"], "default": "active" },
+          "memory_type": { "type": "string" },
+          "priority": { "type": "string" },
+          "limit": { "type": "integer", "default": 50 }
+        }
+      }
+    },
+    {
+      "name": "check_conflicts",
+      "description": "Check if content conflicts with existing memories before storing it.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "content": { "type": "string" }
+        },
+        "required": ["content"]
+      }
+    },
+    {
+      "name": "update_memory",
+      "description": "Update an existing memory's content, priority, or mark another memory as superseded.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memory_id": { "type": "string" },
+          "content": { "type": "string" },
+          "priority": { "type": "string" },
+          "supersedes_id": { "type": "string" }
+        },
+        "required": ["memory_id"]
+      }
+    },
+    {
+      "name": "delete_memory",
+      "description": "Soft-delete a memory (sets status=deleted, preserves history).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memory_id": { "type": "string" }
+        },
+        "required": ["memory_id"]
+      }
+    },
+    {
+      "name": "add_memory_edge",
+      "description": "Add a typed relationship between two memories.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "from_id": { "type": "string" },
+          "to_id": { "type": "string" },
+          "edge_type": { "type": "string", "enum": ["supersedes", "relates_to", "contradicts", "referenced_by"] }
+        },
+        "required": ["from_id", "to_id", "edge_type"]
+      }
+    },
+    {
+      "name": "get_related_memories",
+      "description": "Get all memories connected to a given memory via relationship edges.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "memory_id": { "type": "string" }
+        },
+        "required": ["memory_id"]
+      }
+    }
+  ],
+  "resources": [],
+  "prompts": []
+}
