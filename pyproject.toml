@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "mcp-memory-graph"
+version = "0.1.0"
+description = "Persistent semantic memory for AI agents via an authority-weighted knowledge graph"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "RetroRobAI", email = "rlgjr1971@gmail.com"}]
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0.0",
+    "sqlite-vec>=0.1.0",
+    "sentence-transformers>=2.0.0",
+]
+keywords = ["mcp", "memory", "knowledge-graph", "ai", "agents", "semantic-search", "sqlite", "claude"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Repository = "https://github.com/RetroRobAI/mcp-memory-graph"
+Issues = "https://github.com/RetroRobAI/mcp-memory-graph/issues"
+
+[project.scripts]
+mcp-memory-graph = "mcp_memory_graph.server:main"
+
+[tool.setuptools.packages.find]
+include = ["mcp_memory_graph*"]
