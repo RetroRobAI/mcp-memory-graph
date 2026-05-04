@@ -1,5 +1,7 @@
 # mcp-memory-graph
 
+<!-- mcp-name: io.github.retrorobai/mcp-memory-graph -->
+
 A context-aware memory MCP server for Claude Code and any MCP-compatible AI agent.
 
 Goes beyond basic vector search by adding **authority weighting**, **conflict detection**, and **typed relationship edges** between memories — so your agent always retrieves the right answer when sources disagree.
@@ -30,7 +32,7 @@ pip install mcp-memory-graph
 
 Or run directly:
 ```bash
-git clone <repo>
+git clone https://github.com/RetroRobAI/mcp-memory-graph
 cd mcp-memory-graph
 pip install -r requirements.txt
 python server.py
@@ -41,6 +43,18 @@ python server.py
 ## Claude Code setup
 
 Add to `~/.claude.json` under `mcpServers`:
+
+```json
+"mcp-memory-graph": {
+  "type": "stdio",
+  "command": "mcp-memory-graph",
+  "env": {
+    "MEMORY_GRAPH_DB_PATH": "/path/to/memories.db"
+  }
+}
+```
+
+Or with the raw script:
 
 ```json
 "mcp-memory-graph": {
@@ -64,7 +78,7 @@ If you have an existing memory service (mcp-memory-service, Mem0, or a markdown-
 ### Run the migration script
 
 ```bash
-python migrate.py
+python -m mcp_memory_graph.migrate
 ```
 
 The script will:
@@ -78,10 +92,6 @@ The script will:
 5. Ask for a final confirmation before writing anything
 
 Your existing memory service is never modified — the script only reads from it.
-
-### When to run it
-
-Run `migrate.py` once, after installation, before your first Claude session with mcp-memory-graph. If you choose to run in parallel first and decide to migrate later, simply run the script again.
 
 ---
 
