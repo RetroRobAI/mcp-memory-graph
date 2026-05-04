@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mcp-memory-graph"
-version = "0.1.0"
+version = "0.1.1"
 description = "Persistent semantic memory for AI agents via an authority-weighted knowledge graph"
 readme = "README.md"
 license = {text = "MIT"}
