@@ -1,6 +1,6 @@
 # mcp-memory-graph
 
-<!-- mcp-name: io.github.retrorobai/mcp-memory-graph -->
+<!-- mcp-name: io.github.RetroRobAI/mcp-memory-graph -->
 
 A context-aware memory MCP server for Claude Code and any MCP-compatible AI agent.
 
